@@ -7,6 +7,9 @@ The idea is let tdd to guide us through **architecture and domain design** in a 
 
 Inspired on [supermarket code kata](http://codekata.com/kata/kata01-supermarket-pricing/)
 
+There is no implementation because this repository is the kata description itself, made for an internal kata in N26,
+ feel free to create PRs for your solutions or to use it in your own katas.
+
 ## Kata description
 
 [Slides](https://slides.com/albertllousasortiz-1/supermarket-checkout-kata)
@@ -51,10 +54,8 @@ The output should be `200 OK` with body:
 ```
 
 **Notes**: 
-* The code should be production code
+* Just one rule: Write prod code in terms of architecture and domain
 * VAT: 21%
-* We want to know if something went wrong
-* We want to measure things
 
 Have fun!
 
@@ -71,10 +72,6 @@ Have fun!
 ## Bonus: Second part
 
 Let's finish first the previous one ;)
-
-## Rules
-
-Just one rule: Write prod code in terms of architecture and domain
 
 ## Tech stack
 
