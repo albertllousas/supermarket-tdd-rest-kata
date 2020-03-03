@@ -56,6 +56,7 @@ The output should be `200 OK` with body:
 **Notes**: 
 * Just one rule: Write prod code in terms of architecture and domain
 * VAT: 21%
+* We also want to monitor and trace
 
 Have fun!
 
