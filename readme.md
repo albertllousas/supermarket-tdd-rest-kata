@@ -85,7 +85,7 @@ Let's finish first the previous one ;)
     * [Mockk](https://mockk.io/)
     * [REST Assured](http://rest-assured.io/)
     
-But, feel free to add any dependency it helps to you
+They are just the most common used, feel free to add/remove/change any dependency that fits to you
 
 ## Running the tests
 
