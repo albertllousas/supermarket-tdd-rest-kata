@@ -39,24 +39,18 @@ curl --request POST http://localhost:8080/supermarket/checkout \
   --include
 ```
 
-The output should be `200 OK` with body:
+The output should be `201 CREATED` with body:
 
 ```json
 {
-  "items": [ 
-    {"name": "Potato", "quantity":  2, "price": 4.00 }, 
-    {"name": "Tomato", "quantity":  5, "price": 20.00 } 
-   ],
-  "price": 24.00,
-  "tax"  : 5.04,
-  "total": 29.04
+  "total": 24.00
 }
 ```
-
+   
 **Notes**: 
-* Just one rule: Write prod code in terms of architecture and domain
-* VAT: 21%
-* We also want to monitor and trace
+* Rule: Write prod code in terms of architecture and domain
+* SKUs are [Stock keeping units](https://en.wikipedia.org/wiki/Stock_keeping_unit)
+* Should respond with 204 for an empty cart request, `{ skus: [] }` 
 
 Have fun!
 

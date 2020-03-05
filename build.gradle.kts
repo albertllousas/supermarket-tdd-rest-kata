@@ -41,9 +41,13 @@ dependencies {
     integrationTestImplementation("org.junit.jupiter:junit-jupiter-engine:5.4.2")
     integrationTestImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
     integrationTestImplementation("org.assertj:assertj-core:3.15.0")
-    integrationTestImplementation("io.rest-assured:rest-assured:4.2.0") {
+    integrationTestImplementation("io.rest-assured:rest-assured:3.3.0") {
         exclude(group = "com.sun.xml.bind", module = "jaxb-osgi")
     }
+    integrationTestImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
+    integrationTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.14.0")
 }
 
 tasks.withType<Test> {
