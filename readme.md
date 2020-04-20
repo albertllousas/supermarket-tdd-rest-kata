@@ -72,7 +72,6 @@ Let's finish first the previous one ;)
 ## Tech stack
 
 * Kotlin
-* JVM 1.8.0*
 * [Spring boot](https://spring.io/projects/spring-boot)
 * Testing libraries/frameworks:
     * [JUnit 5](https://junit.org/junit5/docs/current/user-guide/)
