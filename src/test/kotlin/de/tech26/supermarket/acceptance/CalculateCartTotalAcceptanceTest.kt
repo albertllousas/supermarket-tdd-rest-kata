@@ -16,7 +16,6 @@ class CalculateCartTotalAcceptanceTest {
 
     @Test
     fun `should calculate the total of the cart given a list of skus`() {
-
         RestAssured
             .given()
             .body(
@@ -43,8 +42,5 @@ class CalculateCartTotalAcceptanceTest {
 					"""
                 )
             }
-
     }
-
-
 }

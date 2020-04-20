@@ -21,7 +21,7 @@ class CheckoutControllerTest {
 }
 
 // Some people prefer integration over unit in http controller tests, matter of taste ;-)
-// Choose the one you prefer: unit or integration web test to start and remove the other
+// Choose the one you prefer: unit or integration web test and remove the other
 
 @Tag("integration")
 @WebMvcTest(value = [/*my controller class*/])
