@@ -64,6 +64,12 @@ Have fun!
 * YAGNI
 * Don't go always by the book
 
+## Where to start
+
+We have provided the exercise with the [acceptance test](./src/test/kotlin/de/tech26/supermarket/acceptance/CalculateCartTotalAcceptanceTest.kt) already
+ set up, we don't want to waste time designing an API.
+
+So jump [here](./src/test/kotlin/de/tech26/supermarket/changemeplease/CheckoutControllerTest.kt) and start coding.
 
 ## Bonus: Second part
 
