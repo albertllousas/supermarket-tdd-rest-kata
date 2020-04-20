@@ -37,21 +37,46 @@ dependencies {
     }
     testImplementation("org.assertj:assertj-core:3.15.0")
     testImplementation("io.mockk:mockk:1.9.3")
-
-    integrationTestImplementation("org.junit.jupiter:junit-jupiter-engine:5.4.2")
-    integrationTestImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
-    integrationTestImplementation("org.assertj:assertj-core:3.15.0")
-    integrationTestImplementation("io.rest-assured:rest-assured:3.3.0") {
+    testImplementation("io.rest-assured:rest-assured:3.3.0") {
         exclude(group = "com.sun.xml.bind", module = "jaxb-osgi")
     }
-    integrationTestImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-    }
-    integrationTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.14.0")
+    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.14.0")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+tasks.apply {
+    test {
+        enableAssertions = true
+        useJUnitPlatform {}
+    }
+
+    task<Test>("unitTest") {
+        description = "Runs unit tests."
+        useJUnitPlatform {
+            excludeTags("integration")
+            excludeTags("acceptance")
+        }
+        shouldRunAfter(test)
+    }
+
+    task<Test>("integrationTest") {
+        description = "Runs integration tests."
+        useJUnitPlatform {
+            includeTags("integration")
+        }
+        shouldRunAfter(test)
+    }
+
+    task<Test>("acceptanceTest") {
+        description = "Runs acceptance tests."
+        useJUnitPlatform {
+            includeTags("acceptance")
+        }
+        shouldRunAfter(test)
+    }
+
+    check {
+        dependsOn("integrationTest")
+    }
 }
 
 tasks.withType<KotlinCompile> {
@@ -59,21 +84,5 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
     }
-}
-
-val integrationTest = task<Test>("integrationTest") {
-    description = "Runs integration tests."
-    group = "verification"
-
-    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
-    classpath = sourceSets["integrationTest"].runtimeClasspath
-    shouldRunAfter("test")
-}
-
-tasks.check { dependsOn(integrationTest) }
-
-tasks.register("allTest") {
-        dependsOn("test")
-        dependsOn ("integrationTest")
 }
 

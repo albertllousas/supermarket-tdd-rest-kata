@@ -7,14 +7,15 @@ The idea is let tdd to guide us through **architecture and domain design** in a 
 
 Inspired on [supermarket code kata](http://codekata.com/kata/kata01-supermarket-pricing/)
 
-There is no implementation because this repository is the kata description itself, made for an internal kata in N26,
+There is no implementation because this repository is the kata description itself, made for an internal exercise in N26,
  feel free to create PRs for your solutions or to use it in your own katas.
 
 ## Kata description
 
 [Slides](https://slides.com/albertllousasortiz-1/supermarket-checkout-kata)
 
-We are going to implement a supermarket checkout, that basically calculates the receipt given a list of items a customer
+We are going to implement a supermarket checkout, that basically calculates the total price given a list of items a
+ customer
  have on the cart.
    
 In order to do that we will need and stock of the supermarket, it should have this information, at least:
@@ -83,15 +84,22 @@ They are just the most common used, feel free to add/remove/change any dependenc
 
 ## Running the tests
 
-Unit tests:
+Run all tests:
 ```bash
 ./gradlew test
 ```
-Acceptance/Component tests:
+
+Run unit tests:
+```bash
+./gradlew unitTest
+```
+
+Run integration tests:
 ```bash
 ./gradlew integrationTest
 ```
-All tests:
+
+Run acceptance tests:
 ```bash
-./gradlew allTest
+./gradlew acceptanceTest
 ```
