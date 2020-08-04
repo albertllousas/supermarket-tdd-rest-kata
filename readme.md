@@ -108,3 +108,9 @@ Run acceptance tests:
 ```bash
 ./gradlew acceptanceTest
 ```
+
+## Useful links
+
+- [Outside-in Double Loop TDD](http://coding-is-like-cooking.info/2013/04/outside-in-development-with-double-loop-tdd/)
+- [London School](https://www.slideshare.net/pkofler/outsidein-test-driven-development-the-london-school-of-tdd)
+
