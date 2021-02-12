@@ -36,7 +36,8 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("org.assertj:assertj-core:3.15.0")
-    testImplementation("io.mockk:mockk:1.9.3")
+    testImplementation("io.mockk:mockk:1.10.0")
+    testImplementation("com.ninja-squad:springmockk:2.0.3")
     testImplementation("io.rest-assured:rest-assured:3.3.0") {
         exclude(group = "com.sun.xml.bind", module = "jaxb-osgi")
     }

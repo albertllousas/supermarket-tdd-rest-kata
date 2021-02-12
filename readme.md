@@ -14,9 +14,8 @@ There is no implementation because this repository is the kata description itsel
 
 [Slides](https://slides.com/albertllousasortiz-1/supermarket-checkout-kata)
 
-We are going to implement a supermarket checkout, that basically calculates the total price given a list of items a
- customer
- have on the cart.
+We are going to implement a supermarket checkout, that basically calculates the total price given a list of **products** a
+ customer have on the **cart**.
    
 In order to do that we will need and stock of the supermarket, it should have this information, at least:
 
@@ -51,7 +50,7 @@ The output should be `201 CREATED` with body:
 **Notes**: 
 * Rule: Write prod code in terms of architecture and domain
 * SKUs are [Stock keeping units](https://en.wikipedia.org/wiki/Stock_keeping_unit)
-* Should respond with 204 for an empty cart request, `{ skus: [] }` 
+* Should respond with 204 for an empty cart request, `{ "skus": [] }` 
 
 Have fun!
 
