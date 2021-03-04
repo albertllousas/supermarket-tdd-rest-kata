@@ -43,7 +43,7 @@ The output should be `201 CREATED` with body:
 
 ```json
 {
-  "total": 24.00
+  "total": 18.00
 }
 ```
    
