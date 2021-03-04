@@ -54,15 +54,6 @@ The output should be `201 CREATED` with body:
 
 Have fun!
 
-## Tips (My rules)
-
-* Let TDD guide/drive you through the design
-* Don't Mock What You Don't Own
-* Don't mock everything (double testing is ok)
-* SoC: Separate orchestration from calculation
-* YAGNI
-* Don't go always by the book
-
 ## Where to start
 
 We have provided the exercise with the [acceptance test](./src/test/kotlin/de/tech26/supermarket/acceptance/CalculateCartTotalAcceptanceTest.kt) already
