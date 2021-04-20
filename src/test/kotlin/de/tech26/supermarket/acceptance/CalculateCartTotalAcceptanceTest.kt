@@ -27,7 +27,8 @@ class CalculateCartTotalAcceptanceTest {
             )
             .`when`()
             .port(springBootPort)
-            .post("/supermarket/checkout")
+            .contentType("application/json")
+            .post("/checkout")
             .then()
             .assertThat()
             .statusCode(201)
@@ -37,7 +38,7 @@ class CalculateCartTotalAcceptanceTest {
                 assertThatJson(it.body.asString()).isEqualTo(
                     """
 					{
-					  "total": 24.00
+					  "total": 18.00
 					}
 					"""
                 )

@@ -61,9 +61,10 @@ We have provided the exercise with the [acceptance test](./src/test/kotlin/de/te
 
 So jump [here](./src/test/kotlin/de/tech26/supermarket/changemeplease/CheckoutControllerTest.kt) and start coding.
 
-## Bonus: Second part
+## Bonus
 
-Let's finish first the previous one ;)
+- How to handle non-existent stock?
+- How to introduce a discount system?
 
 ## Tech stack
 
