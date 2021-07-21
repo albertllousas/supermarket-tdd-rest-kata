@@ -1,8 +1,7 @@
 package de.tech26.supermarket.checkout
 
 import com.ninjasquad.springmockk.MockkBean
-import de.tech26.supermarket.checkout.StockKeepingUnit.A
-import de.tech26.supermarket.checkout.StockKeepingUnit.B
+import com.sun.javaws.exceptions.InvalidArgumentException
 import io.mockk.every
 import io.mockk.verify
 import org.junit.jupiter.api.Tag
@@ -14,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 
 @Tag("integration")
@@ -37,7 +37,7 @@ class CheckoutControllerTest(@Autowired private val mockMvc: MockMvc) {
 
     @Test
     fun `should return the calculated total price for the requested skus`() {
-        every { calculateTotalPrice.perform(any<List<StockKeepingUnit>>()) } returns BigDecimal.valueOf(18)
+        every { calculateTotalPrice.perform(any<List<String>>()) } returns BigDecimal.valueOf(18)
         val result = mockMvc.perform(
             post("/checkout")
                 .contentType(APPLICATION_JSON)
@@ -47,11 +47,12 @@ class CheckoutControllerTest(@Autowired private val mockMvc: MockMvc) {
             .andExpect(status().isCreated)
             .andExpect(content().string("""{"total":18.00}"""))
 
-        verify { calculateTotalPrice.perform(listOf(A, B, A, B, A, A, A)) }
+        verify { calculateTotalPrice.perform(listOf("A","B","A","B","A","A","A")) }
     }
 
     @Test
     fun `should not accept invalid sku's`() {
+        every { calculateTotalPrice.perform(any<List<String>>()) } throws IllegalArgumentException("Invalid sku's")
         val result = mockMvc.perform(
             post("/checkout")
                 .contentType(APPLICATION_JSON)
@@ -60,6 +61,8 @@ class CheckoutControllerTest(@Autowired private val mockMvc: MockMvc) {
 
         result
             .andExpect(status().isNotFound)
+
+        verify { calculateTotalPrice.perform(listOf("C")) }
     }
 
     @Test

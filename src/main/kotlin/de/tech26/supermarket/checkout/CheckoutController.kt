@@ -2,6 +2,7 @@ package de.tech26.supermarket.checkout
 
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.CREATED
+import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.status
@@ -27,4 +28,7 @@ class CheckoutController(
 
     @ExceptionHandler(HttpMessageConversionException::class)
     fun handleBadRequests(exception: HttpMessageConversionException) = status(BAD_REQUEST).build<Unit>()
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleBadRequests(exception: IllegalArgumentException) = status(NOT_FOUND).build<Unit>()
 }

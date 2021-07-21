@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class CalculateTotalPrice {
-    fun perform(skus: List<StockKeepingUnit>): BigDecimal = TODO()
+    fun perform(skus: List<String>): BigDecimal = TODO()
 }
