@@ -5,10 +5,8 @@ import de.tech26.supermarket.checkout.StockKeepingUnit.A
 import de.tech26.supermarket.checkout.StockKeepingUnit.B
 import io.mockk.every
 import io.mockk.verify
-import java.math.BigDecimal
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito.anyList
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType.APPLICATION_JSON
@@ -16,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.math.BigDecimal
 
 @Tag("integration")
 @WebMvcTest(value = [CheckoutController::class])
@@ -38,7 +37,7 @@ class CheckoutControllerTest(@Autowired private val mockMvc: MockMvc) {
 
     @Test
     fun `should return the calculated total price for the requested skus`() {
-        every { calculateTotalPrice.perform(anyList<StockKeepingUnit>()) } returns BigDecimal.valueOf(18)
+        every { calculateTotalPrice.perform(any<List<StockKeepingUnit>>()) } returns BigDecimal.valueOf(18)
         val result = mockMvc.perform(
             post("/checkout")
                 .contentType(APPLICATION_JSON)

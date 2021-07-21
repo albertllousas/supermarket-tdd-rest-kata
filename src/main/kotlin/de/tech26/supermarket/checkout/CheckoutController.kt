@@ -17,7 +17,8 @@ class CheckoutController(
         return if (checkoutRequest.skus.isEmpty()) {
             ResponseEntity(NO_CONTENT)
         } else {
-            ResponseEntity.status(CREATED).body(CheckoutResponse(BigDecimal(18).setScale(2)))
+            val totalPrice = calculateTotalPrice.perform(checkoutRequest.skus)
+            ResponseEntity.status(CREATED).body(CheckoutResponse(totalPrice.setScale(2)))
         }
     }
 }
