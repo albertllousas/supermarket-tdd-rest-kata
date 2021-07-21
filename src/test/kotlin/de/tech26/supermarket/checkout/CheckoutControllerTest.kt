@@ -50,4 +50,27 @@ class CheckoutControllerTest(@Autowired private val mockMvc: MockMvc) {
         verify { calculateTotalPrice.perform(listOf(A, B, A, B, A, A, A)) }
     }
 
+    @Test
+    fun `should not accept invalid sku's`() {
+        val result = mockMvc.perform(
+            post("/checkout")
+                .contentType(APPLICATION_JSON)
+                .content("""{ "skus": ["C"] }""")
+        )
+
+        result
+            .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun `should fail on invalid request`() {
+        val result = mockMvc.perform(
+            post("/checkout")
+                .contentType(APPLICATION_JSON)
+                .content("""{ "sku": ["C"] }""")
+        )
+
+        result
+            .andExpect(status().isBadRequest)
+    }
 }
