@@ -42,6 +42,7 @@ dependencies {
         exclude(group = "com.sun.xml.bind", module = "jaxb-osgi")
     }
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.14.0")
+    testImplementation("io.kotlintest:kotlintest-assertions:3.4.2")
 }
 
 tasks.apply {

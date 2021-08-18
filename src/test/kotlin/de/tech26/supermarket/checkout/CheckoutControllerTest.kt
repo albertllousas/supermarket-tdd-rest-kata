@@ -1,7 +1,6 @@
 package de.tech26.supermarket.checkout
 
 import com.ninjasquad.springmockk.MockkBean
-import com.sun.javaws.exceptions.InvalidArgumentException
 import io.mockk.every
 import io.mockk.verify
 import org.junit.jupiter.api.Tag
@@ -13,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 
 @Tag("integration")
