@@ -1,6 +1,8 @@
 package de.tech26.supermarket.checkout
 
 import com.ninjasquad.springmockk.MockkBean
+import de.tech26.supermarket.checkout.api.CheckoutController
+import de.tech26.supermarket.checkout.domain.CalculateTotalPrice
 import io.mockk.every
 import io.mockk.verify
 import org.junit.jupiter.api.Tag

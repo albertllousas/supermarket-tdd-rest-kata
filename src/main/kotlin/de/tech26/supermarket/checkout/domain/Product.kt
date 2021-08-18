@@ -1,4 +1,4 @@
-package de.tech26.supermarket.checkout
+package de.tech26.supermarket.checkout.domain
 
 import java.math.BigDecimal
 

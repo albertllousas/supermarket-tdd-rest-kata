@@ -1,5 +1,6 @@
-package de.tech26.supermarket.checkout
+package de.tech26.supermarket.checkout.api
 
+import de.tech26.supermarket.checkout.domain.CalculateTotalPrice
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.NOT_FOUND
