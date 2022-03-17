@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @Tag("integration")
@@ -22,5 +23,22 @@ class ChangeMeControllerTest(@Autowired private val mockMvc: MockMvc) {
         )
 
         result.andExpect(status().isNoContent)
+    }
+
+    @Test
+    fun `should checkout a cart of products`() {
+        val result = mockMvc.perform(
+            post("/checkout").content("""{ "skus": ["A","B","A","B","A","A","A"] }""")
+        )
+
+        result
+            .andExpect(content().json(
+                """
+                    {
+                        "total": 18.00
+                    }
+                """.trimIndent()
+            ))
+            .andExpect(status().isCreated)
     }
 }
