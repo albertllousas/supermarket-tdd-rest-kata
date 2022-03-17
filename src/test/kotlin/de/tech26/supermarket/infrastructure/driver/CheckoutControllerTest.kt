@@ -1,11 +1,8 @@
 package de.tech26.supermarket.infrastructure.driver
 
-import arrow.core.Either
-import arrow.core.computations.result
 import arrow.core.left
 import arrow.core.right
 import com.ninjasquad.springmockk.MockkBean
-import de.tech26.supermarket.domain.ItemNotFoundError
 import de.tech26.supermarket.domain.ItemsNotFoundError
 import de.tech26.supermarket.domain.usecase.CheckoutUseCase
 import io.mockk.every
@@ -68,7 +65,7 @@ class CheckoutControllerTest(@Autowired private val mockMvc: MockMvc) {
         every { checkoutUseCase(itemsInTheCart) } returns ItemsNotFoundError(listOf("C")).left()
 
         val result = mockMvc.perform(
-            post("/checkout").content("""{ "skus": ["A","B","A","B","A","A","A"] }""")
+            post("/checkout").content("""{ "skus": ["C"] }""")
                 .contentType(MediaType.APPLICATION_JSON)
         )
 

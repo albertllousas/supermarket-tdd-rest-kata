@@ -1,7 +1,6 @@
 package de.tech26.supermarket.infrastructure.driver
 
 import de.tech26.supermarket.domain.usecase.CheckoutUseCase
-import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,7 +15,10 @@ class CheckoutController(
     @PostMapping("/checkout")
     fun checkout(@RequestBody request: HttpCheckoutRequest): ResponseEntity<HttpCheckoutResponse> =
         if (request.skus.isEmpty()) ResponseEntity(NO_CONTENT)
-        else ResponseEntity(HttpCheckoutResponse(checkoutUseCase(request.skus)), CREATED)
+        else checkoutUseCase(request.skus)
+            .fold(
+                ifLeft = { ResponseEntity<HttpCheckoutResponse>(NOT_FOUND) },
+                ifRight = { ResponseEntity(HttpCheckoutResponse(it.toDouble()), CREATED) })
 }
 
 data class HttpCheckoutRequest(val skus: List<String>)
