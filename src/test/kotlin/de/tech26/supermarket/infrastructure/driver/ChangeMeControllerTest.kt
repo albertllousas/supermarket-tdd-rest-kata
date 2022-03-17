@@ -1,9 +1,10 @@
-package de.tech26.supermarket.changemeplease
+package de.tech26.supermarket.infrastructure.driver
 
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -20,6 +21,7 @@ class ChangeMeControllerTest(@Autowired private val mockMvc: MockMvc) {
     fun `should not calculate anything if the cart is empty of products`() {
         val result = mockMvc.perform(
             post("/checkout").content("""{ "skus": [] }""")
+                .contentType(MediaType.APPLICATION_JSON)
         )
 
         result.andExpect(status().isNoContent)
@@ -29,6 +31,7 @@ class ChangeMeControllerTest(@Autowired private val mockMvc: MockMvc) {
     fun `should checkout a cart of products`() {
         val result = mockMvc.perform(
             post("/checkout").content("""{ "skus": ["A","B","A","B","A","A","A"] }""")
+                .contentType(MediaType.APPLICATION_JSON)
         )
 
         result
