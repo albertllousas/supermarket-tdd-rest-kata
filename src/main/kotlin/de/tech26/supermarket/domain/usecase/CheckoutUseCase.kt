@@ -11,15 +11,23 @@ import org.springframework.stereotype.Service
 
 @Service
 class CheckoutUseCase(private val itemRepository: ItemRepository) {
-    operator fun invoke(input: List<String>): Either<ItemsNotFoundError, BigDecimal> {
-        if (input.isEmpty()) BigDecimal.ZERO.right()
+    private val zero: Either<ItemsNotFoundError, BigDecimal> = BigDecimal.ZERO.right()
 
+    operator fun invoke(input: List<String>): Either<ItemsNotFoundError, BigDecimal> {
         val items = itemRepository.getItemsByIds(input.map(::Sku).toSet())
-        val zero: Either<ItemsNotFoundError, BigDecimal> = BigDecimal.ZERO.right()
+
         return input.foldRight(zero) { value, acc ->
-            items.find { it.sku == Sku(value) }?.let {
-                acc.map { x -> it.price + x }
-            } ?: ItemsNotFoundError(listOf(value)).left()
+            items.find { it.sku == Sku(value) }
+                ?.let { acc.map { total -> it.price + total } }
+                ?: itemsNotFoundError(acc, value)
         }
     }
+
+    private fun itemsNotFoundError(
+        either: Either<ItemsNotFoundError, BigDecimal>,
+        value: String
+    ) = if (either.isLeft())
+        either.mapLeft { ItemsNotFoundError(listOf(value) + it.items) }
+    else
+        ItemsNotFoundError(listOf(value)).left()
 }
