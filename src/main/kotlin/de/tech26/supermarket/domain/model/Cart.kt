@@ -8,15 +8,7 @@ data class Cart(val items: List<Item>) {
 
     fun calculateTotal(discounts: List<TwoForOneDiscount>): BigDecimal {
         val subTotal = calculateTotal()
-
-        val discountValue: BigDecimal = discounts.map { discount ->
-            val discountTimes: Int = items.filter { it.sku == discount.sku }.size / 2
-            val itemPrice: BigDecimal = items.find { it.sku == discount.sku }?.price ?: 0.0.toBigDecimal()
-            val discountV: BigDecimal = itemPrice * discountTimes.toBigDecimal()
-
-            discountV
-        }.sumOf { it }
-
+        val discountValue: BigDecimal = discounts.map { it.calculate(items) }.sumOf { it }
         return subTotal - discountValue
     }
 

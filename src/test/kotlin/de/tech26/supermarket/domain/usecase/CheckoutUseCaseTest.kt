@@ -6,6 +6,7 @@ import de.tech26.supermarket.domain.ItemsNotFoundError
 import de.tech26.supermarket.domain.model.Item
 import de.tech26.supermarket.domain.model.ItemRepository
 import de.tech26.supermarket.domain.model.Sku
+import de.tech26.supermarket.domain.model.TwoForOneDiscount
 import io.mockk.every
 import io.mockk.mockk
 import java.math.BigDecimal
@@ -47,5 +48,22 @@ internal class CheckoutUseCaseTest {
         val result = checkout(listOf("C", "D"))
 
         assertThat(result).isEqualTo(ItemsNotFoundError(listOf("C", "D")).left())
+    }
+
+    @Test
+    internal fun `should checkout with discount`() {
+        every { itemRepository.getItemsByIds(listOf(Sku("A"), Sku("B"), Sku("A"))) } returns listOf(
+            Item(Sku("A"), 2.0.toBigDecimal()),
+            Item(Sku("B"), 4.0.toBigDecimal()),
+            Item(Sku("A"), 2.0.toBigDecimal())
+        ).right()
+
+        every { discountRepository.getDiscountsBySku(listOf(Sku("A"), Sku("B"), Sku("A"))) } returns listOf(
+            TwoForOneDiscount(Sku("A"))
+        ).right()
+
+        val result = checkout(listOf("A", "B", "A"))
+
+        assertThat(result).isEqualTo(BigDecimal("6.0").right())
     }
 }
