@@ -1,6 +1,5 @@
 package de.tech26.supermarket.domain.usecase
 
-import arrow.core.computations.result
 import arrow.core.left
 import arrow.core.right
 import de.tech26.supermarket.domain.ItemsNotFoundError
@@ -15,12 +14,12 @@ import org.junit.jupiter.api.Test
 
 internal class CheckoutUseCaseTest {
 
-    private val itemRepository: ItemRepository = mockk<ItemRepository>()
+    private val itemRepository: ItemRepository = mockk()
     private val checkout: CheckoutUseCase = CheckoutUseCase(itemRepository)
 
     @Test
     internal fun `should not calculate anything when a cart is empty`() {
-        every { itemRepository.getItemsByIds(setOf()) } returns listOf()
+        every { itemRepository.getItemsByIds(listOf()) } returns listOf<Item>().right()
 
         val result = checkout(emptyList())
 
@@ -29,10 +28,11 @@ internal class CheckoutUseCaseTest {
 
     @Test
     internal fun `should checkout for not empty cart`() {
-        every { itemRepository.getItemsByIds(setOf(Sku("A"), Sku("B"))) } returns listOf(
+        every { itemRepository.getItemsByIds(listOf(Sku("A"), Sku("B"), Sku("A"))) } returns listOf(
             Item(Sku("A"), 2.0.toBigDecimal()),
-            Item(Sku("B"), 4.0.toBigDecimal())
-        )
+            Item(Sku("B"), 4.0.toBigDecimal()),
+            Item(Sku("A"), 2.0.toBigDecimal())
+        ).right()
         val result = checkout(listOf("A", "B", "A"))
 
         assertThat(result).isEqualTo(BigDecimal("8.0").right())
@@ -40,7 +40,9 @@ internal class CheckoutUseCaseTest {
 
     @Test
     internal fun `should fail when items is not found`() {
-        every { itemRepository.getItemsByIds(setOf(Sku("C"), Sku("D"))) } returns emptyList()
+        every { itemRepository.getItemsByIds(listOf(Sku("C"), Sku("D"))) } returns ItemsNotFoundError(
+            listOf("C", "D")
+        ).left()
 
         val result = checkout(listOf("C", "D"))
 
