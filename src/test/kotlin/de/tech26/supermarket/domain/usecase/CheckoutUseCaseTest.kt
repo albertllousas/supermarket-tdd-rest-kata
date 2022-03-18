@@ -1,6 +1,9 @@
 package de.tech26.supermarket.domain.usecase
 
+import arrow.core.computations.result
+import arrow.core.left
 import arrow.core.right
+import de.tech26.supermarket.domain.ItemsNotFoundError
 import de.tech26.supermarket.domain.model.Item
 import de.tech26.supermarket.domain.model.ItemRepository
 import de.tech26.supermarket.domain.model.Sku
@@ -17,6 +20,8 @@ internal class CheckoutUseCaseTest {
 
     @Test
     internal fun `should not calculate anything when a cart is empty`() {
+        every { itemRepository.getItemsByIds(setOf()) } returns listOf()
+
         val result = checkout(emptyList())
 
         assertThat(result).isEqualTo(BigDecimal.ZERO.right())
@@ -30,6 +35,15 @@ internal class CheckoutUseCaseTest {
         )
         val result = checkout(listOf("A", "B", "A"))
 
-        assertThat(result).isEqualTo(BigDecimal(8.0).right())
+        assertThat(result).isEqualTo(BigDecimal("8.0").right())
+    }
+
+    @Test
+    internal fun `should fail when items is not found`() {
+        every { itemRepository.getItemsByIds(setOf(Sku("C"), Sku("D"))) } returns emptyList()
+
+        val result = checkout(listOf("C", "D"))
+
+        assertThat(result).isEqualTo(ItemsNotFoundError(listOf("C", "D")).left())
     }
 }

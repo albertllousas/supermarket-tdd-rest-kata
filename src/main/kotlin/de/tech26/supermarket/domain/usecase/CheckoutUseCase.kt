@@ -1,6 +1,7 @@
 package de.tech26.supermarket.domain.usecase
 
 import arrow.core.Either
+import arrow.core.left
 import arrow.core.right
 import de.tech26.supermarket.domain.ItemsNotFoundError
 import de.tech26.supermarket.domain.model.ItemRepository
@@ -13,14 +14,12 @@ class CheckoutUseCase(private val itemRepository: ItemRepository) {
     operator fun invoke(input: List<String>): Either<ItemsNotFoundError, BigDecimal> {
         if (input.isEmpty()) BigDecimal.ZERO.right()
 
-        val skus = input
-            .map { Sku(it) }
-            .toSet()
-
-        val items = itemRepository.getItemsByIds(skus)
-
-        input.foldRight(BigDecimal.ZERO.right()) { value, acc -> items.find { it.sku == value }?.let { acc.map {  } }}
-
-
+        val items = itemRepository.getItemsByIds(input.map(::Sku).toSet())
+        val zero: Either<ItemsNotFoundError, BigDecimal> = BigDecimal.ZERO.right()
+        return input.foldRight(zero) { value, acc ->
+            items.find { it.sku == Sku(value) }?.let {
+                acc.map { x -> it.price + x }
+            } ?: ItemsNotFoundError(listOf(value)).left()
+        }
     }
 }
