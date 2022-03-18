@@ -19,4 +19,19 @@ class CartTest {
 
         assertThat(result).isEqualTo(8.0.toBigDecimal())
     }
+
+    @Test
+    internal fun `should calculate cart price with 2x1 discount`() {
+        val cart = Cart(
+            listOf(
+                Item(Sku("A"), 2.0.toBigDecimal()),
+                Item(Sku("C"), 3.0.toBigDecimal()),
+                Item(Sku("C"), 3.0.toBigDecimal())
+            )
+        )
+
+        val result = cart.calculateTotal(TwoPerOneDiscount(Sku("C")))
+
+        assertThat(result).isEqualTo(5.0.toBigDecimal())
+    }
 }

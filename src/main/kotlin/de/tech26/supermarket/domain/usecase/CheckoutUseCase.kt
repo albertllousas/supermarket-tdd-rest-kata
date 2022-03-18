@@ -6,7 +6,6 @@ import de.tech26.supermarket.domain.model.Cart
 import de.tech26.supermarket.domain.model.ItemRepository
 import de.tech26.supermarket.domain.model.Sku
 import java.math.BigDecimal
-import java.math.BigDecimal.ZERO
 import org.springframework.stereotype.Service
 
 @Service
