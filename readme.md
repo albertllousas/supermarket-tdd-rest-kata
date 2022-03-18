@@ -64,7 +64,9 @@ So jump [here](./src/test/kotlin/de/tech26/supermarket/changemeplease/ChangeMeCo
 ## Bonus
 
 - How to handle non-existent stock?
-- How to introduce a discount system?
+- Introduce a discount system, choose one:
+  - 2x1 in some products
+  - Discount codes, % per total
 
 ## Tech stack
 
