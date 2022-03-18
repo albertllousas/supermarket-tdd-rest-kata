@@ -30,8 +30,23 @@ class CartTest {
             )
         )
 
-        val result = cart.calculateTotal(TwoPerOneDiscount(Sku("C")))
+        val result = cart.calculateTotal(listOf(TwoForOneDiscount(Sku("C"))))
 
         assertThat(result).isEqualTo(5.0.toBigDecimal())
+    }
+
+    @Test
+    internal fun `should not apply discounts when discounted item doesnt exist`() {
+        val cart = Cart(
+            listOf(
+                Item(Sku("A"), 2.0.toBigDecimal()),
+                Item(Sku("C"), 3.0.toBigDecimal()),
+                Item(Sku("C"), 3.0.toBigDecimal())
+            )
+        )
+
+        val result = cart.calculateTotal(listOf(TwoForOneDiscount(Sku("B"))))
+
+        assertThat(result).isEqualTo(8.0.toBigDecimal())
     }
 }
